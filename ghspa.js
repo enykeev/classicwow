@@ -20,15 +20,10 @@
 
 ;(function(l, projectPages) {
 
-  var repo = projectPages ? '/' + l.pathname.split('/')[1] : ''
-
-
-
    /* redirect all 404 trafic to index.html */
    function redirect() {
      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/?' +
-              (repo ? 'r=' + repo : '') + 
-              (l.pathname ? 'p=' + l.pathname.replace(/&/g, '~and~').replace(repo, '') : '') +
+              (l.pathname ? 'p=' + l.pathname.replace(/&/g, '~and~') : '') +
               (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
               (l.hash))
    }
@@ -41,9 +36,9 @@
          var a = v.split('=')
          q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&')
        })
-       if (q.r !== undefined) {
+       if (q.p !== undefined) {
          window.history.replaceState(null, null,
-           q.r + (q.p || '') +
+           (q.p || '') +
            (q.q ? ('?' + q.q) : '') +
            l.hash
          )
