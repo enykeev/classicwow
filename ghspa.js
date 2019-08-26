@@ -22,9 +22,12 @@
 
   var repo = projectPages ? '/' + l.pathname.split('/')[1] : ''
 
+
+
    /* redirect all 404 trafic to index.html */
    function redirect() {
-     l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + repo + '/?' +
+     l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/?' +
+              (repo ? 'r=' + repo) + 
               (l.pathname ? 'p=' + l.pathname.replace(/&/g, '~and~').replace(repo, '') : '') +
               (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
               (l.hash))
@@ -38,9 +41,9 @@
          var a = v.split('=')
          q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&')
        })
-       if (q.p !== undefined) {
+       if (q.r !== undefined) {
          window.history.replaceState(null, null,
-           repo + (q.p || '') +
+           q.r + (q.p || '') +
            (q.q ? ('?' + q.q) : '') +
            l.hash
          )
